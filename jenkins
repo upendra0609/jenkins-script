@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    environment{
+        name='AAA'
+    }
+    parameters{
+        string(name:'person', defaultValue:'upendra', description:'who are you?')
+    }
+
+    stages {
+        stage('Test') {
+            steps {
+               sh 'echo "${name}"'
+                sh 'echo "${person}"'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Build'
+            }
+        }
+        stage('Deploy on test') {
+            steps {
+                echo 'Deploy on test'
+            }
+        }
+        stage('Deploy on Prod') {
+            input{
+                message 'should we continue'
+                ok 'yes'
+            }
+            steps {
+                echo 'Prod'
+            }
+        }
+    }
+}
